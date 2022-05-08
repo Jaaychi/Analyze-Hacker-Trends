@@ -19,3 +19,10 @@ FROM hacker_news
 GROUP BY title
 HAVING SUM(score) > 200
 ORDER BY total_score DESC;
+
+-- we want to add these users' scores together and divide by the total to get the percentage
+
+SELECT 
+  (517.0 + 309 + 304 + 282) / 4.0;
+  
+ 
