@@ -51,6 +51,55 @@ SELECT CASE
 FROM hacker_news
 GROUP BY 1;
 
+-- analyze the time stamps first
+SELECT
+  timestamp
+FROM hacker_news
+LIMIT 10;
+
+-- figure out the regular time_ts and then create a new column per hour and then avg score with round and count the titles
+SELECT 
+  timestamp AS regular_ts,
+  strftime('%H', timestamp) AS per_hour,
+  ROUND(AVG(score), 0) AS average_score,
+  COUNT(title) AS num_titles
+FROM hacker_news
+GROUP BY timestamp
+LIMIT 20;
+
+-- my analysis 
+WITH CTE1 AS (SELECT 
+  timestamp AS regular_ts,
+  strftime('%H', timestamp) AS per_hour,
+  ROUND(AVG(score), 0) AS average_score,
+  COUNT(title) AS num_titles
+FROM 
+  hacker_news
+WHERE 
+  regular_ts IS NOT NULL
+OR
+  per_hour IS NOT NULL
+AND 
+  per_hour >= 1
+AND 
+  regular_ts LIKE '%2017%'
+GROUP BY 
+  timestamp
+HAVING 
+  average_score IS NOT NULL
+OR 
+  num_titles IS NOT NULL
+AND
+  num_titles != 0
+LIMIT 
+  20 OFFSET 1)
+
+SELECT 
+  regular_ts,
+  per_hour,
+  average_score,
+  num_titles
+FROM CTE1;
 
 
 
