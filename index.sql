@@ -26,3 +26,18 @@ SELECT
   (517.0 + 309 + 304 + 282) / 4.0;
   
  
+-- count where url equates to a certain url
+
+SELECT
+  COUNT(url) as total_count
+FROM hacker_news
+WHERE url = 'https://www.youtube.com/watch?v=dQw4w9WgXcQ';
+
+-- Creating a CASE WHEN 
+SELECT CASE
+  WHEN url LIKE '%github.com%' THEN 'Github'
+  WHEN url LIKE '%kickstarter.com%' THEN 'KickStarter'
+  ELSE 'NA'
+  END AS Source
+FROM hacker_news;
+
