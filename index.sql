@@ -41,3 +41,16 @@ SELECT CASE
   END AS Source
 FROM hacker_news;
 
+-- Build from the previous query and then create the number of stories from each URL using COUNT() and then use a GROUP BY and CASE statement
+SELECT CASE
+  WHEN url LIKE '%github.com%' THEN 'Github'
+  WHEN url LIKE '%kickstarter.com%' THEN 'KickStarter'
+  ELSE 'NA'
+  END AS Source,
+  COUNT(url) AS total_url
+FROM hacker_news
+GROUP BY 1;
+
+
+
+
